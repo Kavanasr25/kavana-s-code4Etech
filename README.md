@@ -1,192 +1,124 @@
+Resume Relevance Checker
+
+A Flask web application to evaluate how well candidate resumes match a Job Description (JD). It extracts skills from both resumes and JD, calculates hard and soft scores, and provides an overall relevance verdict.
+
+Table of Contents
+
 Project Description
 
-Resume Relevance Checker is a web-based tool that helps recruiters and hiring managers quickly assess how well candidate resumes match a given Job Description (JD). It automates the tedious process of manually reading resumes and evaluating skills, providing both hard (exact skills match) and soft (semantic similarity) scores.
+Features
 
-Why This Project?
+Folder Structure
 
-Recruiters often face hundreds of resumes for a single role. Manually checking each resume is time-consuming and prone to human error. This project:
+Installation
 
-Speeds up resume screening.
+Step-by-Step Code Explanation
 
-Standardizes evaluation with quantitative scores.
+Project Description
 
-Highlights missing skills or strengths of candidates.
+Recruiters and hiring managers often deal with hundreds of resumes per role. This project automates the evaluation process by:
 
-Works with multiple file formats including PDFs, DOCX, TXT, and images.
+Extracting text from resumes and Job Descriptions.
 
-Key Features
+Detecting skills using NLP and fuzzy matching.
 
-Text Extraction
+Calculating hard, soft, and final scores.
 
-Extract text from resumes and job descriptions using PDF, DOCX, TXT, and image files.
+Displaying results in a clear, sortable web interface.
 
-Uses OCR fallback for scanned PDFs or images.
+Supports multiple file formats: .pdf, .docx, .doc, .txt, .png, .jpg, .jpeg.
 
-Skill Extraction
+Features
 
-Detects technical and professional skills using spaCy and fuzzy matching.
+Text Extraction: Extracts content from PDF, DOCX, TXT, and images (OCR fallback).
 
-Customizable skill list for different domains.
+Skill Detection: Uses spaCy and fuzzy matching to detect skills.
 
-Scoring System
+Scoring: Computes:
 
-Hard Score: Measures the percentage of JD skills present in the resume.
+Hard Score: Exact match of JD skills in resume.
 
-Soft Score: Measures semantic similarity using sentence-transformers embeddings.
+Soft Score: Semantic similarity using sentence-transformers embeddings.
 
-Final Score: Weighted average of hard and soft scores to generate an overall relevance rating.
+Final Score: Weighted average of hard and soft scores.
 
-Verdict: Categorizes candidates into “High”, “Medium”, or “Low” match.
+Verdict: Categorizes resumes into "High", "Medium", or "Low" match.
 
-Web Interface
-
-Easy-to-use form to upload resumes and paste/upload a Job Description.
-
-Displays results in a clear, sortable table showing scores, found skills, and missing skills.
-
-Multiple File Support
-
-Supports .pdf, .docx, .doc, .txt, .png, .jpg, .jpeg.
-
-Technologies Used
-
-Python 3
-
-Flask – Web framework for UI
-
-pdfplumber, docx2txt, Pillow, pytesseract – Text extraction
-
-spaCy, fuzzywuzzy – Skill extraction and matching
-
-sentence-transformers, numpy – Semantic similarity and embeddings
-
-pandas – Tabular results handling
-
-HTML/CSS – Simple UI
-
-How It Works
-
-User uploads one or more resumes and provides a Job Description.
-
-The system extracts text from each resume and the JD.
-
-Skills are parsed from both the JD and resumes.
-
-Hard and soft scores are calculated.
-
-A final weighted score is computed, and a verdict is assigned.
-
-Results are displayed in a table highlighting matched and missing skills.
-
-Use Cases
-
-HR recruiters screening hundreds of resumes quickly.
-
-Hiring managers comparing candidates objectively.
-
-Job platforms providing automated resume scoring.
-
-Candidates self-evaluating their resumes against a job posting.
-
-Next Steps / Future Enhancements
-
-Add a resume ranking dashboard with charts.
-
-Include industry-specific skill sets dynamically.
-
-Integrate resume parsing APIs for more file formats.
-
-Add authentication and database support for saving results.
+Web Interface: Upload resumes, paste/upload JD, and view score
 
 
 
 
-
-
-
-
-# Resume Relevance Checker
-
-A Flask web application to evaluate how well candidate resumes match a Job Description (JD). The system extracts skills from both resumes and JD, computes hard and soft scores, and provides an overall relevance verdict.
-
----
-
-## Features
-
-- Extract text from PDFs, DOCX/DOC, TXT, and images (PNG, JPG, JPEG) using `pdfplumber`, `docx2txt`, and `pytesseract`.
-- Detect skills using **spaCy** and fuzzy matching.
-- Compute:
-  - **Hard Score**: Percentage of JD skills present in the resume.
-  - **Soft Score**: Semantic similarity using **sentence-transformers** embeddings.
-  - **Final Score**: Weighted combination of hard and soft scores.
-- Display results in a sortable table on a web interface.
-
----
-
-## Folder Structure
+Folder Structure
 
 resume_relevance/
 ├── app/
-│ ├── init.py
-│ ├── extract_text.py
-│ ├── skills.py
-│ ├── embeddings.py
-│ └── scorer.py
+│   ├── __init__.py
+│   ├── extract_text.py
+│   ├── skills.py
+│   ├── embeddings.py
+│   └── scorer.py
 ├── templates/
-│ └── index.html
+│   └── index.html
 ├── web_app.py
 └── requirements.txt
 
 
+Installation
 
+Clone the repository
 
----
-
-## Installation
-
-1. Clone the repository:
-```bash
 git clone https://github.com/<your-username>/resume-relevance.git
 cd resume-relevance
 
 
 
-Create a virtual environment:
+Create a virtual environment
 
 Windows:
-
 python -m venv venv
 .\venv\Scripts\activate
 
 
 
-Install dependencies:
+
+Install dependencies
 
 pip install -r requirements.txt
 
 
-Install system dependencies for OCR & PDF processing:
+Install system dependencies for OCR & PDF
 
 macOS: brew install tesseract poppler
 
 Ubuntu/Debian: sudo apt install -y tesseract-ocr poppler-utils
 
-Windows: Install Tesseract OCR (UB Mannheim recommended) and Poppler; add bin directories to PATH.
+Windows: Install Tesseract OCR (UB Mannheim recommended) and Poppler; add their bin directories to PATH.
 
-Download spaCy English model:
+
+
+Download spaCy English model
 
 python -m spacy download en_core_web_sm
 
 
 
+Run the web app
 
-Step-by-Step Code
+# This file is intentionally left empty
+# It tells Python that 'app' is a package
 
-app/__init__.py
-# app/__init__.py
-# This file intentionally left empty to make 'app' a Python package
+Purpose:
+Allows other Python files to import modules from the app folder.
+
+
+
 
 2. app/extract_text.py
+
+Handles text extraction from resumes and JD files.
+
+
 from pathlib import Path
 import pdfplumber
 import docx2txt
@@ -201,7 +133,7 @@ logging.basicConfig(level=logging.INFO)
 URL_REGEX = re.compile(r'https?://\S+|www\.\S+')
 REPEAT_LINE_THRESHOLD = 2
 
-# Uncomment if Tesseract OCR is in a custom path
+# Uncomment if Tesseract OCR is installed in a custom path
 # pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 def extract_pdf_text(path: str) -> str:
@@ -276,7 +208,30 @@ def extract_text(filepath: str) -> dict:
     urls = extract_urls(raw)
     return {"text": raw, "urls": urls}
 
+
+
+Explanation:
+
+Extracts text from PDF, DOCX, TXT, and images.
+
+Handles OCR for scanned documents.
+
+Cleans and normalizes text.
+
+Removes repeated headers/footers.
+
+Extracts URLs.
+
+
+
+
+
 3. app/skills.py
+
+Detects skills from text using NLP and fuzzy matching.
+
+
+
 import spacy
 from spacy.matcher import PhraseMatcher
 from fuzzywuzzy import process
@@ -321,6 +276,317 @@ def extract_skills(text, fuzzy_threshold=90):
             if score and score >= fuzzy_threshold:
                 found.add(match.lower())
     return sorted(found)
+Explanation:
+
+Uses spaCy PhraseMatcher for exact skill detection.
+
+Uses fuzzywuzzy for approximate matching.
+
+Returns a sorted list of found skills.
+
+
+
+4. app/embeddings.py
+
+Handles semantic similarity between resume and JD using embeddings.
+
+from sentence_transformers import SentenceTransformer
+import numpy as np
+import pickle
+from pathlib import Path
+
+MODEL_NAME = "all-MiniLM-L6-v2"
+_cache_dir = Path(".cache_embeddings")
+_cache_dir.mkdir(exist_ok=True)
+
+_model = None
+
+def get_model():
+    global _model
+    if _model is None:
+        _model = SentenceTransformer(MODEL_NAME)
+    return _model
+
+def _normalize(vec: np.ndarray):
+    norm = np.linalg.norm(vec)
+    return vec / norm if norm > 0 else vec
+
+def embed_text(text: str):
+    """
+    Embed text (truncated to 1500 chars to limit size). Returns normalized vector.
+    """
+    model = get_model()
+    doc = text if len(text) < 1500 else text[:1500]
+    vec = model.encode(doc, convert_to_numpy=True)
+    return _normalize(vec)
+
+def embed_batch(list_of_texts, cache_name=None):
+    """
+    Embed multiple texts at once. Optionally caches results for reuse.
+    """
+    if cache_name:
+        cache_file = _cache_dir / f"{cache_name}.pkl"
+        if cache_file.exists():
+            with open(cache_file, "rb") as f:
+                return pickle.load(f)
+    model = get_model()
+    vecs = model.encode(list_of_texts, convert_to_numpy=True, show_progress_bar=True)
+    vecs = [_normalize(v) for v in vecs]
+    if cache_name:
+        with open(_cache_dir / f"{cache_name}.pkl", "wb") as f:
+            pickle.dump(vecs, f)
+    return vecs
+
+def cosine_sim(a, b):
+    """Compute cosine similarity between two normalized vectors."""
+    return float(np.dot(a, b))
+
+
+Explanation:
+
+Uses sentence-transformers to embed text into vectors.
+
+_normalize ensures vectors have unit length.
+
+embed_text is used for single text (JD or resume).
+
+embed_batch can embed multiple texts efficiently and cache them.
+
+cosine_sim calculates similarity between vectors (soft score).
+
+
+
+5. app/scorer.py
+
+Computes hard score, soft score, final score, and verdict.
+
+from typing import List
+from app.skills import extract_skills
+from app.embeddings import embed_text, cosine_sim
+
+def parse_jd_skills(jd_text: str) -> List[str]:
+    return extract_skills(jd_text)
+
+def hard_score_resume(jd_skills: List[str], resume_skills: List[str]) -> float:
+    """Percentage of JD skills present in resume."""
+    if not jd_skills:
+        return 50.0
+    jd_set = set(s.lower() for s in jd_skills)
+    res_set = set(s.lower() for s in resume_skills)
+    matched = jd_set.intersection(res_set)
+    score = (len(matched) / len(jd_set)) * 100
+    return round(score, 2)
+
+def soft_score_resume(jd_text: str, resume_text: str) -> float:
+    """Semantic similarity score of JD and resume."""
+    if not jd_text or not resume_text:
+        return 50.0
+    v1 = embed_text(jd_text)
+    v2 = embed_text(resume_text)
+    sim = cosine_sim(v1, v2)  # in [-1,1]
+    soft = max(min((sim + 1) / 2 * 100, 100), 0)
+    return round(soft, 2)
+
+def final_score(hard: float, soft: float, hard_w=0.65, soft_w=0.35) -> int:
+    """Weighted combination of hard and soft scores."""
+    final = hard_w * hard + soft_w * soft
+    return int(round(final))
+
+def verdict_from_score(score: int) -> str:
+    """Assigns verdict based on final score."""
+    if score >= 75:
+        return "High"
+    if score >= 50:
+        return "Medium"
+    return "Low"
+
+Explanation:
+
+Hard Score: Exact match of JD skills in resume.
+
+Soft Score: Semantic similarity of full text (embedding-based).
+
+Final Score: Weighted average (hard=65%, soft=35%).
+
+Verdict: Categorizes resumes as High, Medium, Low.
+
+
+6. web_app.py
+
+The main Flask application serving the web interface.
+
+
+
+from flask import Flask, render_template, request, flash
+from pathlib import Path
+import tempfile, os
+import pandas as pd
+import logging
+
+from app.extract_text import extract_text
+from app.skills import extract_skills
+from app.scorer import parse_jd_skills, hard_score_resume, soft_score_resume, final_score, verdict_from_score
+
+app = Flask(__name__)
+app.secret_key = os.environ.get("FLASK_SECRET", "dev_secret_key")
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+@app.route("/", methods=["GET", "POST"])
+def index():
+    results = None
+    jd_text = ""
+
+    if request.method == "POST":
+        jd_text = (request.form.get("jd_text") or "").strip()
+        jd_file = request.files.get("jd_file")
+
+        # Extract JD from file if text not provided
+        if jd_file and not jd_text and jd_file.filename:
+            tmp = tempfile.NamedTemporaryFile(delete=False, suffix=Path(jd_file.filename).suffix)
+            try:
+                jd_file.save(tmp.name)
+                data = extract_text(tmp.name)
+                jd_text = data.get("text", "")
+            finally:
+                os.unlink(tmp.name)
+
+        resumes = request.files.getlist("resumes")
+        if not jd_text:
+            flash("Please paste a Job Description or upload a JD file.", "warning")
+        elif not resumes or all((not f or not f.filename) for f in resumes):
+            flash("Please upload one or more resume files.", "warning")
+        else:
+            rows = []
+            jd_skills = parse_jd_skills(jd_text)
+            for rf in resumes:
+                if not rf or not rf.filename:
+                    continue
+                tmp = tempfile.NamedTemporaryFile(delete=False, suffix=Path(rf.filename).suffix)
+                try:
+                    rf.save(tmp.name)
+                    data = extract_text(tmp.name)
+                    rtext = data.get("text", "")
+                finally:
+                    os.unlink(tmp.name)
+
+                res_skills = extract_skills(rtext)
+                hard = hard_score_resume(jd_skills, res_skills)
+                soft = soft_score_resume(jd_text, rtext)
+                final = final_score(hard, soft)
+                verdict = verdict_from_score(final)
+                missing = sorted(set(s.lower() for s in jd_skills) - set(s.lower() for s in res_skills))
+                rows.append({
+                    "file": rf.filename,
+                    "hard_score": hard,
+                    "soft_score": soft,
+                    "final_score": final,
+                    "verdict": verdict,
+                    "found_skills": ", ".join(res_skills),
+                    "missing_skills": ", ".join(missing)
+                })
+
+            results = pd.DataFrame(rows).sort_values("final_score", ascending=False).to_dict(orient="records")
+
+    return render_template("index.html", results=results, jd_text=jd_text)
+
+if __name__ == "__main__":
+    app.run(debug=True, port=5000)
+
+
+
+
+
+
+Explanation:
+
+Handles GET and POST requests.
+
+Accepts JD text or JD file, and multiple resume files.
+
+Extracts text from JD and resumes.
+
+Calculates hard, soft, and final scores.
+
+Shows results in a sortable HTML table.
+
+
+
+
+7. templates/index.html
+
+HTML template for the web interface.
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Resume Relevance Checker</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: #f4f4f4; }
+        .flash { padding: 10px; background: #ffefc2; margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+    <h1>Resume Relevance Checker</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, msg in messages %}
+          <div class="flash {{ category }}">{{ msg }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" enctype="multipart/form-data">
+        <label>Paste Job Description:</label><br>
+        <textarea name="jd_text" rows="6" cols="80">{{ jd_text }}</textarea><br><br>
+
+        <label>Or Upload JD File (.txt/.pdf/.docx):</label>
+        <input type="file" name="jd_file" accept=".txt,.pdf,.docx"><br><br>
+
+        <label>Upload Resumes (.pdf/.docx) — Multiple:</label>
+        <input type="file" name="resumes" multiple accept=".pdf,.docx"><br><br>
+
+        <button type="submit">Evaluate</button>
+    </form>
+
+    {% if results %}
+    <h2>Results</h2>
+    <table>
+        <tr>
+            <th>File</th>
+            <th>Hard Score</th>
+            <th>Soft Score</th>
+            <th>Final Score</th>
+            <th>Verdict</th>
+            <th>Found Skills</th>
+            <th>Missing Skills</th>
+        </tr>
+        {% for row in results %}
+        <tr>
+            <td>{{ row.file }}</td>
+            <td>{{ row.hard_score }}</td>
+            <td>{{ row.soft_score }}</td>
+            <td>{{ row.final_score }}</td>
+            <td>{{ row.verdict }}</td>
+            <td>{{ row.found_skills }}</td>
+            <td>{{ row.missing_skills }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</body>
+</html>
+
+
+
 
 
 
